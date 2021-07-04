@@ -15,7 +15,7 @@ pars1 = html.findAll('tr')
 txtH="   <td style='text-align: center;'><span style='font-size: 14pt;'>"
 #print (txtH)
 txtE="</td>\n"
-txtR=""
+txtR="<table border='1'>\n<tbody>"
 for i in range (len(pars1)):
         pars2 = pars1[i].findAll('td')
         txtR+="<tr>\n"
@@ -25,6 +25,7 @@ for i in range (len(pars1)):
             pars3=pars3.replace('  ',' ')
             txtR+=txtH+pars3+txtE
         txtR+="</tr>\n"
+txtR+="</tbody>\n</table>"
 print(txtR)
 
 #for data in filteredNews:
