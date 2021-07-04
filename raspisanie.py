@@ -32,12 +32,10 @@ for data in pars1:
             # price = text.replace(' ', '').replace('₽', '')
             #print(txtH+pars3+txtE)
             tx=filteredNews.append(pars3)
-            #print(txtH+tx+txtE)
-            #txtR+=txtH+tx+txtE
             #print(tx)
 
 ttx=txtR.replace('\n ',' ')
-#надо убрать пробелы и разделить по дням
+# разделить по дням
 print(ttx)
 
 #for data in filteredNews:
