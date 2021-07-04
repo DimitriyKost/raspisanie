@@ -8,35 +8,35 @@ file_htm = '01.htm'
 
 with open (file_htm,'r') as f:
     html = BeautifulSoup(f.read(), 'html.parser')
+
 filteredNews = []
 allNews = []
-#print(html)
 pars1 = html.findAll('tr')
-
-#print (pars1[0])
-##for data in pars1:
-##    if data.find('td') is not None:
-##        filteredNews.append(data.text)
-txtH="<td style='text-align: center;'><span style='font-size: 14pt; color: #ff0000;'>"
-print (txtH)
+txtH="    <td style='text-align: center;'><span style='font-size: 14pt;'>"
+#print (txtH)
 txtE="</td>\n"
 txtR=""
-for data in pars1:
+#print(len(pars1))
+for i in range (len(pars1)):
 #    if data.find('span') is not None:
-        pars2 = data.findAll('td')
+        pars2 = pars1[i].findAll('td')
 
-#        print(pars2[1])
-        for txt in pars2:
-            pars3 = txt.find('span').text
+#        print(len(pars2))
+        txtR+="<tr>\n"
+        for j in range (len(pars2)):
+            pars3 = pars2[j].find('span').text
+            pars3=pars3.replace('\n ',' ')
+            pars3=pars3.replace('  ',' ')
             txtR+=txtH+pars3+txtE
+        txtR+="</tr>\n"
             # price = text.replace(' ', '').replace('₽', '')
             #print(txtH+pars3+txtE)
-            tx=filteredNews.append(pars3)
+#tx=filteredNews.append(pars3)
             #print(tx)
 
-ttx=txtR.replace('\n ',' ')
+
 # разделить по дням
-print(ttx)
+print(txtR)
 
 #for data in filteredNews:
 #    print(data)
