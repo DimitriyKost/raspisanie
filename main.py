@@ -1,4 +1,3 @@
-import item as item
 from bs4 import BeautifulSoup
 import PySimpleGUI as sg
 import sys
