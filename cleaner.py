@@ -18,8 +18,7 @@ def pars(file_htm):
 \t\t\t<td style='text-align: center;' width='20%'><span style='font-size: 14pt;'>Утро</span></td>\n\
 \t\t\t<td style='text-align: center;' width='20%'><span style='font-size: 14pt;'>Вечер</span></td>\n\
 \t\t</tr>\n"
-    txtH = "\t\t\t<td style='text-align: center;'><span style='font-size: 14pt;'>"
-    txtE = "</td>\n"
+    txtH = "\t\t\t<td style='text-align: center; font-size: 14pt;'>"
 
     # читаем файл и парсим его
     with open(file_htm, 'r') as f:
@@ -29,12 +28,12 @@ def pars(file_htm):
     for i in range(len(pars1)):
         pars2 = pars1[i].findAll('td')
         txtR += "\t\t<tr>\n"
-        #ttx = " "
         for j in range(len(pars2)):
             it = pars2[j].findAll('span')
-            txtR += "\t\t\t<td style='text-align: center; font-size: 14pt;'>"
+            txtR += txtH
             for dat in it:
                 tt = dat.text
+                # Очитска текста от перевода строки, двойных и неразрывных пробелов
                 tt = tt.replace('\n ', ' ')
                 for uy in range(15):
                     tt = tt.replace(u'\xa0', u' ')
@@ -59,7 +58,6 @@ def pars(file_htm):
 
 layout = [[sg.Text('Файл расписания: '), sg.Text(size=(25, 1), key='-OUTPUT-')],
           [sg.Button('Выбрать файл', size=(20, 2)), sg.Button('Конвертировать', size=(20, 2))]]
-
 window = sg.Window('Чистильщик', layout)
 while True:  # Event Loop
     event, values = window.read()
@@ -74,9 +72,9 @@ while True:  # Event Loop
         if not fname:
             sg.popup("Cancel", "Не выбрали файл")
             raise SystemExit("Cancelling: no filename supplied")
-        file = fname
+        fileR = fname  # Берем название и путь файла для обработки
     if event == 'Конвертировать':
-        textt = pars(file)
+        textt = pars(fileR)
         sg.popup_scrolled(textt, title="Текст после очистки", size=(120, 40))
         pyperclip.copy(textt)
         sg.popup("Очищенный текст скопирован в буфер обмена")
