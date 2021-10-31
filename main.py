@@ -10,13 +10,15 @@ def pars(file_htm):
     # парсинг расписания сохраненного в ворде в формате HTM с фильтром
     # отсеиваем остальное ненужное.
     # данные для формирования таблицы
-    txtR = "<table border='1'>\n\t<tbody>\n\t\t<tr>\n\
-                <td style='text-align: center;' colspan='2' align='center' width='10%'><span style='font-size: 14pt;'>Дата</span></td>\n\
-                <td style='text-align: center;' width='50%'><span style='font-size: 14pt;'>Память святого или события</span></td>\n\
-                <td style='text-align: center;' width='20%'><span style='font-size: 14pt;'>Утро</span></td>\n\
-                <td style='text-align: center;' width='20%'><span style='font-size: 14pt;'>Вечер</span></td>\n\
-            </tr>\n"
-    txtH = "            <td style='text-align: center;'><span style='font-size: 14pt;'>"
+    txtR = "<p style='text-align: center;'><span style='color: #ff0000;'><strong>На мобильных устройствах расписание можно двигать как по вертикали, так и по горизонтали.</strong></span></p>\
+<div style='max-width: 100%; overflow: scroll;'>\n\
+<table border='1'>\n\t<tbody>\n\t\t<tr>\n\
+\t\t\t<td style='text-align: center;' colspan='2' align='center' width='10%'><span style='font-size: 14pt;'>Дата</span></td>\n\
+\t\t\t<td style='text-align: center;' width='50%'><span style='font-size: 14pt;'>Память святого или события</span></td>\n\
+\t\t\t<td style='text-align: center;' width='20%'><span style='font-size: 14pt;'>Утро</span></td>\n\
+\t\t\t<td style='text-align: center;' width='20%'><span style='font-size: 14pt;'>Вечер</span></td>\n\
+\t\t</tr>\n"
+    txtH = "\t\t\t<td style='text-align: center;'><span style='font-size: 14pt;'>"
     txtE = "</td>\n"
 
     # читаем файл и парсим его
@@ -27,16 +29,21 @@ def pars(file_htm):
     for i in range(len(pars1)):
         pars2 = pars1[i].findAll('td')
         txtR += "\t\t<tr>\n"
-        ttx = " "
+        #ttx = " "
         for j in range(len(pars2)):
             it = pars2[j].findAll('span')
-            tc = pars2[j].span.get('style')
-            tcc = tc.find('color')
-            txtR += "\t\t\t<td>"
+            #tc = pars2[j].span.get('style')
+            #tcc = tc.find('color')
+            print(it)
+            txtR += "\t\t\t<td style='text-align: center; font-size: 14pt;'>"
             for dat in it:
                 tt = dat.text
                 tt = tt.replace('\n ', ' ')
-                tt = tt.replace('  ', ' ')
+                for uy in range(15):
+                    tt = tt.replace(u'\xa0', u' ')
+                    tt = tt.replace('  ', ' ')
+                tt = tt.replace('Литургия', 'Литургия<br>')
+                tt = tt.replace('Утреня.', 'Утреня.<br>')
                 tc = dat.get('style')
                 tcc = tc.find('color')
                 if tcc != -1:
@@ -49,7 +56,7 @@ def pars(file_htm):
                     txtR += tt
             txtR += "</td>\n"
         txtR += "\t\t</tr>\n"
-    txtR += "\t</tbody>\n</table>"
+    txtR += "\t</tbody>\n</table>\n</div>"
     return txtR
 
 
