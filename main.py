@@ -32,9 +32,6 @@ def pars(file_htm):
         #ttx = " "
         for j in range(len(pars2)):
             it = pars2[j].findAll('span')
-            #tc = pars2[j].span.get('style')
-            #tcc = tc.find('color')
-            print(it)
             txtR += "\t\t\t<td style='text-align: center; font-size: 14pt;'>"
             for dat in it:
                 tt = dat.text
